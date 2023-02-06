@@ -1,6 +1,129 @@
-import React from "react"
+import React, { useEffect } from "react"
+import { useImmerReducer } from "use-immer"
 
 export default function MainForm() {
+  const initialState = {
+    name: { value: "", hasErrors: false, message: "", checkCount: 0 },
+    email: { value: "", hasErrors: false, message: "", checkCount: 0 },
+    phoneNumber: { value: "", hasErrors: false, message: "", checkCount: 0 },
+    submitCount: 0,
+  }
+
+  function ourReducer(draft, action) {
+    switch (action.type) {
+      case "nameNow":
+        draft.name.hasErrors = false
+        draft.name.value = action.value
+        if (draft.name.value.length > 40) {
+          draft.name.hasErrors = true
+          draft.name.message = "Name can't be longer than 40 character"
+        }
+        if (draft.name.value && !/^([a-zA-Z ]+)$/.test(draft.name.value)) {
+          draft.name.hasErrors = true
+          draft.name.message = "Name can only contain characters"
+        }
+        return
+      case "nameAfterDelay":
+        if (!draft.name.hasErrors && draft.name.value.length < 3) {
+          draft.name.hasErrors = true
+          draft.name.message = "Name should be longer than three characters"
+        }
+        if (!draft.name.hasErrors) {
+          draft.name.checkCount++
+        }
+        return
+      case "emailNow":
+        draft.email.hasErrors = false
+        draft.email.value = action.value
+        return
+      case "emailAfterDelay":
+        if (!/^\S+@.\S+$/.test(draft.email.value)) {
+          draft.email.hasErrors = true
+          draft.email.message = "The email address you provided is invalid"
+        }
+        if (!draft.email.hasErrors) {
+          draft.email.checkCount++
+        }
+        return
+      case "phoneNumberNow":
+        draft.phoneNumber.hasErrors = false
+        draft.phoneNumber.value = action.value
+        if (draft.phoneNumber.value.length < 10 || draft.phoneNumber.value.length > 15) {
+          draft.phoneNumber.hasErrors = true
+          draft.phoneNumber.message = "Please enter a valid phone number"
+        }
+        if (draft.phoneNumber.value && !/^([0-9]+)$/.test(draft.phoneNumber.value)) {
+          draft.phoneNumber.hasErrors = true
+          draft.phoneNumber.message = "This field can only contain Numbers"
+        }
+        return
+      case "phoneNumberAfterDelay":
+        if (!draft.phoneNumber.hasErrors) {
+          draft.phoneNumber.checkCount++
+        }
+        return
+      case "submitForm":
+        if (!draft.name.hasErrors && !draft.email.hasErrors && !draft.phoneNumber.hasErrors) {
+          draft.submitCount++
+        }
+        return
+    }
+  }
+
+  const [state, dispatch] = useImmerReducer(ourReducer, initialState)
+
+  //check name after delay
+  useEffect(() => {
+    if (state.name.value) {
+      const delay = setTimeout(() => {
+        dispatch({ type: "nameAfterDelay" })
+      }, 700)
+      return () => {
+        clearTimeout(delay)
+      }
+    }
+  }, [state.name.value])
+
+  //check email after delay
+  useEffect(() => {
+    if (state.email.value) {
+      const delay = setTimeout(() => {
+        dispatch({ type: "emailAfterDelay" })
+      }, 700)
+      return () => {
+        clearTimeout(delay)
+      }
+    }
+  }, [state.email.value])
+
+  //check phone number after delay
+  useEffect(() => {
+    const delay = setTimeout(() => {
+      dispatch({ type: "phoneNumberAfterDelay" })
+    }, 700)
+    return () => {
+      clearTimeout(delay)
+    }
+  }, [state.phoneNumber.value])
+
+  //handle submit
+  function handleSubmit(e) {
+    e.preventDefault()
+    dispatch({ type: "nameNow", value: state.name.value })
+    dispatch({ type: "nameAfterDelay", value: state.name.value })
+    dispatch({ type: "emailNow", value: state.email.value })
+    dispatch({ type: "emailAfterDelay", value: state.email.value })
+    dispatch({ type: "phoneNumberNow", value: state.phoneNumber.value })
+    dispatch({ type: "phoneNumberAfterDelay", value: state.phoneNumber.value })
+    dispatch({ type: "submitForm" })
+  }
+
+  useEffect(() => {
+    if (state.submitCount > 0) {
+      console.log("do something")
+    }
+  }, [state.submitCount])
+
   return (
     <div className={`px-20 py-12`}>
       <div>
@@ -8,24 +131,27 @@ export default function MainForm() {
         <h5 className={`text-sm font-light`}>Please provide your name, email address, and phone number</h5>
       </div>
       <div className="mt-10">
-        <form className="flex flex-col" action="">
+        <form onSubmit={handleSubmit} className="flex flex-col">
           <div className={`flex flex-col`}>
             <label htmlFor="Name" className={`font-semibold text-gray-900 text-sm`}>
               Name
             </label>
-            <input type="text" name="" className={`border border-gray-200 rounded-md mb-5`} />
+            <div className={`bg-red-300 text-red-400 rounded-t-md font-semibold text-xs`}>{state.name.hasErrors && state.name.message}</div>
+            <input onChange={(e) => dispatch({ type: "nameNow", value: e.target.value })} placeholder="e.g. Stephen King" type="text" name="" className={`border border-gray-200 rounded-md mb-5`} />
           </div>
           <div className={`flex flex-col`}>
             <label htmlFor="Email address" className={`font-semibold text-gray-900 text-sm`}>
               Email address
             </label>
-            <input type="text" name="" className={`border border-gray-200 rounded-md mb-5`} />
+            <div className={`bg-red-300 text-red-400 rounded-t-md font-semibold text-xs`}>{state.email.hasErrors && state.email.message}</div>
+            <input onChange={(e) => dispatch({ type: "emailNow", value: e.target.value })} placeholder="e.g. stephenking@lorem.com" type="text" name="" className={`border border-gray-200 rounded-md mb-5`} />
           </div>
           <div className={`flex flex-col`}>
             <label htmlFor="Phone Number" className={`font-semibold text-gray-900 text-sm`}>
               Phone Number
             </label>
-            <input type="text" className={`border border-gray-200 rounded-md mb-5`} />
+            <div className={`bg-red-300 text-red-400 rounded-t-md font-semibold text-xs`}>{state.phoneNumber.hasErrors && state.phoneNumber.message}</div>
+            <input onChange={(e) => dispatch({ type: "phoneNumberNow", value: e.target.value })} placeholder="e.g. +1 234 567 890" type="text" className={`border border-gray-200 rounded-md mb-5`} />
           </div>
           <button type="submit" className={`bg-blue-900 text-white self-end mt-10 text-sm font-semibold px-4 py-2 rounded-md`}>
             Next Step
