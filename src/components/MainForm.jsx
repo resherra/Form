@@ -48,7 +48,8 @@ export default function MainForm() {
       case "phoneNumberNow":
         draft.phoneNumber.hasErrors = false
         draft.phoneNumber.value = action.value
-        if (draft.phoneNumber.value.length < 10 || draft.phoneNumber.value.length > 15) {
+
+        if (draft.phoneNumber.value && (draft.phoneNumber.value.length < 10 || draft.phoneNumber.value.length > 15)) {
           draft.phoneNumber.hasErrors = true
           draft.phoneNumber.message = "Please enter a valid phone number"
         }
@@ -89,7 +90,7 @@ export default function MainForm() {
     if (state.email.value) {
       const delay = setTimeout(() => {
         dispatch({ type: "emailAfterDelay" })
-      }, 700)
+      }, 1200)
       return () => {
         clearTimeout(delay)
       }
@@ -100,7 +101,7 @@ export default function MainForm() {
   useEffect(() => {
     const delay = setTimeout(() => {
       dispatch({ type: "phoneNumberAfterDelay" })
-    }, 700)
+    }, 1200)
     return () => {
       clearTimeout(delay)
     }
@@ -127,33 +128,39 @@ export default function MainForm() {
   return (
     <div className={`px-20 py-12`}>
       <div>
-        <h3 className={`text-3xl font-semibold`}>Personal info</h3>
-        <h5 className={`text-sm font-light`}>Please provide your name, email address, and phone number</h5>
+        <h3 className={`text-2xl text-marineBlue font-bold`}>Personal info</h3>
+        <h5 className={`text-sm text-coolGray font-light`}>Please provide your name, email address, and phone number.</h5>
       </div>
       <div className="mt-10">
         <form onSubmit={handleSubmit} className="flex flex-col">
           <div className={`flex flex-col`}>
-            <label htmlFor="Name" className={`font-semibold text-gray-900 text-sm`}>
-              Name
-            </label>
-            <div className={`bg-red-300 text-red-400 rounded-t-md font-semibold text-xs`}>{state.name.hasErrors && state.name.message}</div>
-            <input onChange={(e) => dispatch({ type: "nameNow", value: e.target.value })} placeholder="e.g. Stephen King" type="text" name="" className={`border border-gray-200 rounded-md mb-5`} />
+            <div className={`flex justify-between`}>
+              <label htmlFor="Name" className={`font-semibold text-marineBlue text-xs pb-1`}>
+                Name
+              </label>
+              <div className={`text-strawberryRed font-semibold text-xs`}>{state.name.hasErrors && state.name.message}</div>
+            </div>
+            <input onChange={(e) => dispatch({ type: "nameNow", value: e.target.value })} placeholder="e.g. Stephen King" type="text" name="" className={`border border-lightGray rounded-md placeholder:text-xs placeholder:text-coolGray placeholder:font-semibold py-1 pl-2 mb-5 ` + (state.name.hasErrors ? "border-strawberryRed outline-strawberryRed" : "outline-purplishBlue")} />
           </div>
           <div className={`flex flex-col`}>
-            <label htmlFor="Email address" className={`font-semibold text-gray-900 text-sm`}>
-              Email address
-            </label>
-            <div className={`bg-red-300 text-red-400 rounded-t-md font-semibold text-xs`}>{state.email.hasErrors && state.email.message}</div>
-            <input onChange={(e) => dispatch({ type: "emailNow", value: e.target.value })} placeholder="e.g. stephenking@lorem.com" type="text" name="" className={`border border-gray-200 rounded-md mb-5`} />
+            <div className={`flex justify-between`}>
+              <label htmlFor="Email address" className={`font-semibold text-marineBlue text-xs pb-1`}>
+                Email address
+              </label>
+              <div className={`text-strawberryRed font-semibold text-xs`}>{state.email.hasErrors && state.email.message}</div>
+            </div>
+            <input onChange={(e) => dispatch({ type: "emailNow", value: e.target.value })} placeholder="e.g. stephenking@lorem.com" type="text" name="" className={`border border-lightGray rounded-md placeholder:text-xs placeholder:text-coolGray placeholder:font-semibold py-1 pl-2 mb-5 ` + (state.email.hasErrors ? "border-strawberryRed outline-strawberryRed" : "outline-purplishBlue")} />
           </div>
           <div className={`flex flex-col`}>
-            <label htmlFor="Phone Number" className={`font-semibold text-gray-900 text-sm`}>
-              Phone Number
-            </label>
-            <div className={`bg-red-300 text-red-400 rounded-t-md font-semibold text-xs`}>{state.phoneNumber.hasErrors && state.phoneNumber.message}</div>
-            <input onChange={(e) => dispatch({ type: "phoneNumberNow", value: e.target.value })} placeholder="e.g. +1 234 567 890" type="text" className={`border border-gray-200 rounded-md mb-5`} />
+            <div className={`flex justify-between`}>
+              <label htmlFor="Phone Number" className={`font-semibold text-marineBlue text-xs pb-1 `}>
+                Phone Number
+              </label>
+              <div className={`text-strawberryRed font-semibold text-xs`}>{state.phoneNumber.hasErrors && state.phoneNumber.message}</div>
+            </div>
+            <input onChange={(e) => dispatch({ type: "phoneNumberNow", value: e.target.value })} placeholder="e.g. +1 234 567 890" type="text" className={`border border-lightGray rounded-md placeholder:text-xs placeholder:text-coolGray placeholder:font-semibold py-1 pl-2 mb-5 ` + (state.phoneNumber.hasErrors ? "border-strawberryRed outline-strawberryRed" : "outline-purplishBlue")} />
           </div>
-          <button type="submit" className={`bg-blue-900 text-white self-end mt-10 text-sm font-semibold px-4 py-2 rounded-md`}>
+          <button type="submit" className={`bg-marineBlue text-white self-end mt-10 text-sm font-semibold px-4 py-2 rounded-md`}>
             Next Step
           </button>
         </form>
