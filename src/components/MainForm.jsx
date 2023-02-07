@@ -48,7 +48,10 @@ export default function MainForm() {
       case "phoneNumberNow":
         draft.phoneNumber.hasErrors = false
         draft.phoneNumber.value = action.value
-
+        if (!draft.phoneNumber.value) {
+          draft.phoneNumber.hasErrors = true
+          draft.phoneNumber.message = "This field is required"
+        }
         if (draft.phoneNumber.value && (draft.phoneNumber.value.length < 10 || draft.phoneNumber.value.length > 15)) {
           draft.phoneNumber.hasErrors = true
           draft.phoneNumber.message = "Please enter a valid phone number"
