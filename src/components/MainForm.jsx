@@ -136,13 +136,13 @@ export default function MainForm() {
   return (
     <Container>
       <SideBar />
-      <div className={`px-20 py-12`}>
+      <div className={`w-[25rem] m-auto`}>
         <div>
           <h3 className={`text-2xl text-marineBlue font-bold`}>Personal info</h3>
           <h5 className={`text-sm text-coolGray font-light`}>Please provide your name, email address, and phone number.</h5>
         </div>
-        <div className="mt-10">
-          <form onSubmit={handleSubmit} className="flex flex-col">
+        <div>
+          <form className="flex flex-col">
             <div className={`flex flex-col`}>
               <div className={`flex justify-between`}>
                 <label htmlFor="Name" className={`font-semibold text-marineBlue text-xs pb-1`}>
@@ -150,7 +150,7 @@ export default function MainForm() {
                 </label>
                 <div className={`text-strawberryRed font-semibold text-xs`}>{state.name.hasErrors && state.name.message}</div>
               </div>
-              <input onChange={(e) => dispatch({ type: "nameNow", value: e.target.value })} placeholder="e.g. Stephen King" type="text" name="" className={`border border-lightGray rounded-md placeholder:text-xs placeholder:text-coolGray placeholder:font-semibold py-1 pl-2 mb-5 ` + (state.name.hasErrors ? "border-strawberryRed outline-strawberryRed" : "outline-purplishBlue")} />
+              <input autoComplete="off" autoCorrect="off" spellCheck="false" onChange={(e) => dispatch({ type: "nameNow", value: e.target.value })} placeholder="e.g. Stephen King" type="text" name="" className={`border border-lightGray rounded-md placeholder:text-xs placeholder:text-coolGray placeholder:font-semibold py-1 pl-2 mb-5 ` + (state.name.hasErrors ? "border-strawberryRed outline-strawberryRed" : "outline-purplishBlue")} />
             </div>
             <div className={`flex flex-col`}>
               <div className={`flex justify-between`}>
@@ -159,7 +159,7 @@ export default function MainForm() {
                 </label>
                 <div className={`text-strawberryRed font-semibold text-xs`}>{state.email.hasErrors && state.email.message}</div>
               </div>
-              <input onChange={(e) => dispatch({ type: "emailNow", value: e.target.value })} placeholder="e.g. stephenking@lorem.com" type="text" name="" className={`border border-lightGray rounded-md placeholder:text-xs placeholder:text-coolGray placeholder:font-semibold py-1 pl-2 mb-5 ` + (state.email.hasErrors ? "border-strawberryRed outline-strawberryRed" : "outline-purplishBlue")} />
+              <input autoComplete="off" autoCorrect="off" spellCheck="false" onChange={(e) => dispatch({ type: "emailNow", value: e.target.value })} placeholder="e.g. stephenking@lorem.com" type="text" name="" className={`border border-lightGray rounded-md placeholder:text-xs placeholder:text-coolGray placeholder:font-semibold py-1 pl-2 mb-5 ` + (state.email.hasErrors ? "border-strawberryRed outline-strawberryRed" : "outline-purplishBlue")} />
             </div>
             <div className={`flex flex-col`}>
               <div className={`flex justify-between`}>
@@ -168,13 +168,13 @@ export default function MainForm() {
                 </label>
                 <div className={`text-strawberryRed font-semibold text-xs`}>{state.phoneNumber.hasErrors && state.phoneNumber.message}</div>
               </div>
-              <input onChange={(e) => dispatch({ type: "phoneNumberNow", value: e.target.value })} placeholder="e.g. +1 234 567 890" type="text" className={`border border-lightGray rounded-md placeholder:text-xs placeholder:text-coolGray placeholder:font-semibold py-1 pl-2 mb-5 ` + (state.phoneNumber.hasErrors ? "border-strawberryRed outline-strawberryRed" : "outline-purplishBlue")} />
+              <input autoComplete="off" autoCorrect="off" spellCheck="false" onChange={(e) => dispatch({ type: "phoneNumberNow", value: e.target.value })} placeholder="e.g. +1 234 567 890" type="text" className={`border border-lightGray rounded-md placeholder:text-xs placeholder:text-coolGray placeholder:font-semibold py-1 pl-2 mb-5 ` + (state.phoneNumber.hasErrors ? "border-strawberryRed outline-strawberryRed" : "outline-purplishBlue")} />
             </div>
-            <button type="submit" className={`bg-marineBlue text-white self-end mt-10 text-sm font-semibold px-4 py-2 rounded-md`}>
-              Next Step
-            </button>
           </form>
         </div>
+        <button onClick={handleSubmit} type="submit" className={`max-w-max bg-marineBlue text-white self-end text-sm font-semibold px-4 py-2 rounded-md`}>
+          Next Step
+        </button>
       </div>
     </Container>
   )
