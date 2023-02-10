@@ -3,17 +3,46 @@ import Container from "../Container"
 import SideBar from "./SideBar"
 import { useState } from "react"
 import { Switch } from "@headlessui/react"
-import { useNavigate } from "react-router-dom"
+import { useImmerReducer } from "use-immer"
 
 export default function SelectPlan() {
   const [enabled, setEnabled] = useState(false)
-  const [plan, setPlan] = useState("")
 
-  function handleSubmit() {
-    if (plan === "") {
-      console.log("error happened")
+  const initialState = {
+    plan: { value: "", hasErrors: false, message: "" },
+    submitCount: 0,
+  }
+
+  function ourReducer(draft, action) {
+    switch (action.type) {
+      case "plan":
+        draft.plan.hasErrors = false
+        draft.plan.value = action.value
+        if (!draft.plan.value) {
+          draft.plan.hasErrors = true
+          draft.plan.message = "You must choose a plan!"
+        }
+        return
+      case "submit":
+        if (!draft.plan.hasErrors) {
+          draft.submitCount++
+        }
+        return
     }
   }
+
+  const [state, dispatch] = useImmerReducer(ourReducer, initialState)
+
+  function handleSubmit() {
+    dispatch({ type: "plan", value: state.plan.value })
+    dispatch({ type: "submit" })
+  }
+
+  useEffect(() => {
+    if (state.submitCount > 0) {
+      console.log("submitted succefuly")
+    }
+  }, [state.submitCount])
 
   function handleGoBack() {
     console.log("go back!")
@@ -29,7 +58,7 @@ export default function SelectPlan() {
         </div>
         <ul className={`grid w-full grid-cols-3 gap-4`}>
           <li>
-            <input type="checkbox" checked={plan === "arcade"} onChange={() => setPlan("arcade")} id="arcade-option" className="hidden peer" />
+            <input type="checkbox" value="arcade" checked={state.plan.value === "arcade"} onChange={(e) => dispatch({ type: "plan", value: e.target.value })} id="arcade-option" className="hidden peer" />
             <label htmlFor="arcade-option" className="inline-flex items-center justify-between w-full p-5 border border-lightGray rounded-lg cursor-pointer peer-checked:border-purplishBlue hover:bg-alabaster">
               <div>
                 <img src="/icon-arcade.svg" alt="" className={`pb-10`} />
@@ -40,7 +69,7 @@ export default function SelectPlan() {
             </label>
           </li>
           <li>
-            <input type="checkbox" checked={plan === "advanced"} onChange={() => setPlan("advanced")} id="advanced-option" value="" className="hidden peer" />
+            <input type="checkbox" value="advanced" checked={state.plan.value === "advanced"} onChange={(e) => dispatch({ type: "plan", value: e.target.value })} id="advanced-option" className="hidden peer" />
             <label htmlFor="advanced-option" className="inline-flex items-center justify-between w-full p-5 border border-lightGray rounded-lg cursor-pointer peer-checked:border-purplishBlue hover:bg-alabaster">
               <div>
                 <img src="/icon-advanced.svg" alt="" className={`pb-10`} />
@@ -51,7 +80,7 @@ export default function SelectPlan() {
             </label>
           </li>
           <li>
-            <input type="checkbox" checked={plan === "pro"} onChange={() => setPlan("pro")} id="pro-option" value="" className="hidden peer" />
+            <input type="checkbox" value="pro" checked={state.plan.value === "pro"} onChange={(e) => dispatch({ type: "plan", value: e.target.value })} id="pro-option" className="hidden peer" />
             <label htmlFor="pro-option" className="inline-flex items-center justify-between w-full p-5 border border-lightGray rounded-lg cursor-pointer peer-checked:border-purplishBlue hover:bg-alabaster">
               <div>
                 <img src="/icon-pro.svg" alt="" className={`pb-10`} />
@@ -62,6 +91,7 @@ export default function SelectPlan() {
             </label>
           </li>
         </ul>
+        <div className={`text-strawberryRed font-semibold text-xs`}>{state.plan.hasErrors && state.plan.message}</div>
         <div className={`flex flex-row justify-center gap-3 items-center bg-alabaster rounded-lg text-sm py-2 mt-8`}>
           <div className={`font-semibold ` + (enabled ? `text-coolGray` : `text-marineBlue`)}>Monthly</div>
           <Switch checked={enabled} onChange={setEnabled} className={`${enabled ? "bg-marineBlue" : "bg-lightGray"} relative inline-flex h-5 w-9 items-center rounded-full`}>
