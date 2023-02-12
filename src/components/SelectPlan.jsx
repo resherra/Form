@@ -4,8 +4,10 @@ import SideBar from "./SideBar"
 import { useState } from "react"
 import { Switch } from "@headlessui/react"
 import { useImmerReducer } from "use-immer"
+import { useNavigate } from "react-router-dom"
 
 export default function SelectPlan() {
+  const navigate = useNavigate()
   const [enabled, setEnabled] = useState(false)
 
   const initialState = {
@@ -40,17 +42,17 @@ export default function SelectPlan() {
 
   useEffect(() => {
     if (state.submitCount > 0) {
-      console.log("submitted succefuly")
+      navigate("/add-ons")
     }
   }, [state.submitCount])
 
   function handleGoBack() {
-    console.log("go back!")
+    navigate("/")
   }
 
   return (
     <Container>
-      <SideBar />
+      <SideBar step={"2"} />
       <div className={`w-[25rem] m-auto`}>
         <div>
           <h3 className={`text-2xl text-marineBlue font-bold`}>select your plan</h3>

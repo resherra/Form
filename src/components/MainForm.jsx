@@ -135,7 +135,7 @@ export default function MainForm() {
 
   return (
     <Container>
-      <SideBar />
+      <SideBar step={"1"} />
       <div className={`w-[25rem] m-auto`}>
         <div>
           <h3 className={`text-2xl text-marineBlue font-bold`}>Personal info</h3>
