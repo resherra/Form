@@ -1,10 +1,12 @@
-import React, { useEffect } from "react"
+import React, { useContext, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { useImmerReducer } from "use-immer"
 import Container from "../Container"
 import SideBar from "./SideBar"
+import dispatchContext from "../dispatchContext"
 
 export default function MainForm() {
+  const appDispatch = useContext(dispatchContext)
   const navigate = useNavigate()
 
   const initialState = {
@@ -129,6 +131,7 @@ export default function MainForm() {
 
   useEffect(() => {
     if (state.submitCount > 0) {
+      appDispatch({ type: "register", data: { name: state.name.value, email: state.email.value, phoneNumber: state.phoneNumber.value } })
       navigate(`/select-plan`)
     }
   }, [state.submitCount])

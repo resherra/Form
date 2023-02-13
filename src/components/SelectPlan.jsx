@@ -1,17 +1,22 @@
-import React, { useEffect } from "react"
-import Container from "../Container"
-import SideBar from "./SideBar"
+import React, { useContext, useEffect } from "react"
 import { useState } from "react"
 import { Switch } from "@headlessui/react"
 import { useImmerReducer } from "use-immer"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
+
+//components
+import Container from "../Container"
+import SideBar from "./SideBar"
+import dispatchContext from "../dispatchContext"
 
 export default function SelectPlan() {
   const navigate = useNavigate()
   const [enabled, setEnabled] = useState(false)
+  const appDispatch = useContext(dispatchContext)
 
   const initialState = {
     plan: { value: "", hasErrors: false, message: "" },
+    yearly: false,
     submitCount: 0,
   }
 
@@ -43,12 +48,9 @@ export default function SelectPlan() {
   useEffect(() => {
     if (state.submitCount > 0) {
       navigate("/add-ons")
+      appDispatch({ type: "selectPlan", data: { type: state.plan.value, yearly: enabled } })
     }
   }, [state.submitCount])
-
-  function handleGoBack() {
-    navigate("/")
-  }
 
   return (
     <Container>
@@ -96,16 +98,16 @@ export default function SelectPlan() {
         <div className={`text-strawberryRed font-semibold text-xs`}>{state.plan.hasErrors && state.plan.message}</div>
         <div className={`flex flex-row justify-center gap-3 items-center bg-alabaster rounded-lg text-sm py-2 mt-8`}>
           <div className={`font-semibold ` + (enabled ? `text-coolGray` : `text-marineBlue`)}>Monthly</div>
-          <Switch checked={enabled} onChange={setEnabled} className={`${enabled ? "bg-marineBlue" : "bg-lightGray"} relative inline-flex h-5 w-9 items-center rounded-full`}>
+          <Switch onChange={setEnabled} className={`${enabled ? "bg-marineBlue" : "bg-lightGray"} relative inline-flex h-5 w-9 items-center rounded-full`}>
             <span className="sr-only">Switch yearly</span>
             <span className={`${enabled ? "translate-x-5" : "translate-x-1"} inline-block h-3 w-3 transform rounded-full bg-white transition`} />
           </Switch>
           <div className={`font-semibold ` + (enabled ? `text-marineBlue` : `text-coolGray`)}>Yearly</div>
         </div>
         <div className={`mt-10 flex flex-row justify-between items-end`}>
-          <button onClick={handleGoBack} className={`text-marineBlue text-sm font-semibold px-4 py-2`}>
-            Go back
-          </button>
+          <Link to="/">
+            <button className={`text-marineBlue text-sm font-semibold px-4 py-2`}>Go back</button>
+          </Link>
           <button onClick={handleSubmit} className={`bg-marineBlue text-white text-sm font-semibold px-4 py-2 rounded-md`}>
             Next Step
           </button>
