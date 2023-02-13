@@ -15,7 +15,7 @@ export default function SelectPlan() {
   const appDispatch = useContext(dispatchContext)
 
   const initialState = {
-    plan: { value: "", hasErrors: false, message: "" },
+    plan: { value: "", price: 0, hasErrors: false, message: "" },
     yearly: false,
     submitCount: 0,
   }
@@ -25,6 +25,7 @@ export default function SelectPlan() {
       case "plan":
         draft.plan.hasErrors = false
         draft.plan.value = action.value
+        draft.plan.price = action.price
         if (!draft.plan.value) {
           draft.plan.hasErrors = true
           draft.plan.message = "You must choose a plan!"
@@ -41,14 +42,14 @@ export default function SelectPlan() {
   const [state, dispatch] = useImmerReducer(ourReducer, initialState)
 
   function handleSubmit() {
-    dispatch({ type: "plan", value: state.plan.value })
+    dispatch({ type: "plan", value: state.plan.value, price: state.plan.price })
     dispatch({ type: "submit" })
   }
 
   useEffect(() => {
     if (state.submitCount > 0) {
       navigate("/add-ons")
-      appDispatch({ type: "selectPlan", data: { type: state.plan.value, yearly: enabled } })
+      appDispatch({ type: "selectPlan", data: { type: state.plan.value, yearly: enabled, price: state.plan.price } })
     }
   }, [state.submitCount])
 
@@ -62,7 +63,7 @@ export default function SelectPlan() {
         </div>
         <ul className={`grid w-full grid-cols-3 gap-4`}>
           <li>
-            <input type="checkbox" value="arcade" checked={state.plan.value === "arcade"} onChange={(e) => dispatch({ type: "plan", value: e.target.value })} id="arcade-option" className="hidden peer" />
+            <input type="checkbox" value="arcade" checked={state.plan.value === "arcade"} onChange={(e) => dispatch({ type: "plan", value: e.target.value, price: !enabled ? 9 : 90 })} id="arcade-option" className="hidden peer" />
             <label htmlFor="arcade-option" className="inline-flex items-center justify-between w-full p-5 border border-lightGray rounded-lg cursor-pointer peer-checked:border-purplishBlue hover:bg-alabaster">
               <div>
                 <img src="/icon-arcade.svg" alt="" className={`pb-10`} />
@@ -73,7 +74,7 @@ export default function SelectPlan() {
             </label>
           </li>
           <li>
-            <input type="checkbox" value="advanced" checked={state.plan.value === "advanced"} onChange={(e) => dispatch({ type: "plan", value: e.target.value })} id="advanced-option" className="hidden peer" />
+            <input type="checkbox" value="advanced" checked={state.plan.value === "advanced"} onChange={(e) => dispatch({ type: "plan", value: e.target.value, price: !enabled ? 12 : 120 })} id="advanced-option" className="hidden peer" />
             <label htmlFor="advanced-option" className="inline-flex items-center justify-between w-full p-5 border border-lightGray rounded-lg cursor-pointer peer-checked:border-purplishBlue hover:bg-alabaster">
               <div>
                 <img src="/icon-advanced.svg" alt="" className={`pb-10`} />
@@ -84,7 +85,7 @@ export default function SelectPlan() {
             </label>
           </li>
           <li>
-            <input type="checkbox" value="pro" checked={state.plan.value === "pro"} onChange={(e) => dispatch({ type: "plan", value: e.target.value })} id="pro-option" className="hidden peer" />
+            <input type="checkbox" value="pro" checked={state.plan.value === "pro"} onChange={(e) => dispatch({ type: "plan", value: e.target.value, price: !enabled ? 15 : 150 })} id="pro-option" className="hidden peer" />
             <label htmlFor="pro-option" className="inline-flex items-center justify-between w-full p-5 border border-lightGray rounded-lg cursor-pointer peer-checked:border-purplishBlue hover:bg-alabaster">
               <div>
                 <img src="/icon-pro.svg" alt="" className={`pb-10`} />

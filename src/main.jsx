@@ -24,9 +24,9 @@ export default function Main() {
     },
     plan: {
       type: "",
-      yearly: localStorage.getItem("yearly"),
+      yearly: false,
+      price: 0,
     },
-    ons: [],
   }
 
   function ourReducer(draft, action) {
@@ -56,12 +56,11 @@ export default function Main() {
   useEffect(() => {
     localStorage.setItem("type", state.plan.type)
     localStorage.setItem("yearly", state.plan.yearly)
+    localStorage.setItem("price", state.plan.price)
   }, [state.plan])
 
   //store ons
-  useEffect(() => {
-    localStorage.setItem("ons", state.ons)
-  }, [state.ons])
+  useEffect(() => {}, [state.ons])
 
   return (
     <stateContext.Provider value={state}>

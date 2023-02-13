@@ -14,13 +14,25 @@ export default function AddOns() {
   const appDispatch = useContext(dispatchContext)
 
   const initialState = {
-    ons: [],
+    ons: {
+      first: {
+        name: "onlineService",
+        cost: 0,
+      },
+      second: {
+        name: "largerStorage",
+        cost: 0,
+      },
+      third: {
+        name: "customProfile",
+        cost: 0,
+      },
+    },
   }
 
   function ourReducer(draft, action) {
     switch (action.type) {
       case "addOn":
-        draft.ons.push(action.value)
         return
     }
   }
@@ -28,7 +40,7 @@ export default function AddOns() {
   const [state, dispatch] = useImmerReducer(ourReducer, initialState)
 
   function handleSubmit() {
-    appDispatch({ type: "addOns", data: state.ons })
+    appDispatch({ type: "addOns", data: { first: { name: state.ons.first.name, cost: state.ons.first.cost }, second: { name: state.ons.second.name, cost: state.ons.second.cost }, third: { name: state.ons.third.name, cost: state.ons.third.cost } } })
     navigate("/summary")
   }
 
@@ -43,7 +55,7 @@ export default function AddOns() {
         {/*  games +$1/mo */}
         <div className={`grid w-full gap-4`}>
           <div>
-            <input onChange={(e) => dispatch({ type: "addOn", value: e.target.value })} type="checkbox" value="Online Service" id="online-service" className="hidden peer" />
+            <input type="checkbox" value="Online Service" id="online-service" className="hidden peer" />
             <label htmlFor="online-service" className="inline-flex items-center justify-between w-full px-5 py-4 border border-lightGray rounded-lg cursor-pointer peer-checked:border-purplishBlue hover:bg-alabaster">
               <div className={`w-full flex justify-between items-center`}>
                 <div>
@@ -55,7 +67,7 @@ export default function AddOns() {
             </label>
           </div>
           <div>
-            <input onChange={(e) => dispatch({ type: "addOn", value: e.target.value })} type="checkbox" value="Larger Storage" id="Larger Storage" className="hidden peer" />
+            <input type="checkbox" value="Larger Storage" id="Larger Storage" className="hidden peer" />
             <label htmlFor="Larger Storage" className="inline-flex items-center justify-between w-full px-5 py-4 border border-lightGray rounded-lg cursor-pointer peer-checked:border-purplishBlue hover:bg-alabaster">
               <div className={`w-full flex justify-between items-center`}>
                 <div>
@@ -67,7 +79,7 @@ export default function AddOns() {
             </label>
           </div>
           <div>
-            <input onChange={(e) => dispatch({ type: "addOn", value: e.target.value })} type="checkbox" value="Customizable profile" id="Customizable profile" className="hidden peer" />
+            <input type="checkbox" value="Customizable profile" id="Customizable profile" className="hidden peer" />
             <label htmlFor="Customizable profile" className="inline-flex items-center justify-between w-full px-5 py-4 border border-lightGray rounded-lg cursor-pointer peer-checked:border-purplishBlue hover:bg-alabaster">
               <div className={`w-full flex justify-between items-center`}>
                 <div>
