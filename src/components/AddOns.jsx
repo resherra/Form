@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom"
 import { useImmer, useImmerReducer } from "use-immer"
@@ -14,25 +14,54 @@ export default function AddOns() {
   const appDispatch = useContext(dispatchContext)
 
   const initialState = {
-    ons: {
-      first: {
-        name: "onlineService",
-        cost: 0,
-      },
-      second: {
-        name: "largerStorage",
-        cost: 0,
-      },
-      third: {
-        name: "customProfile",
-        cost: 0,
-      },
-    },
+    first: { checked: false, ons: "", cost: 0 },
+    second: { checked: false, ons: "", cost: 0 },
+    third: { checked: false, ons: "", cost: 0 },
   }
 
   function ourReducer(draft, action) {
     switch (action.type) {
-      case "addOn":
+      case "firstChecked":
+        draft.first.checked = true
+        if (draft.first.checked) {
+          draft.first.ons = action.data.ons
+          draft.first.cost = action.data.cost
+        }
+        return
+      case "firstUnchecked":
+        draft.first.checked = false
+        if (!draft.first.checked) {
+          draft.first.ons = ""
+          draft.first.cost = 0
+        }
+        return
+      case "secondChecked":
+        draft.second.checked = true
+        if (draft.second.checked) {
+          draft.second.ons = action.data.ons
+          draft.second.cost = action.data.cost
+        }
+        return
+      case "secondUnchecked":
+        draft.second.checked = false
+        if (!draft.second.checked) {
+          draft.second.ons = ""
+          draft.second.cost = 0
+        }
+        return
+      case "thirdChecked":
+        draft.third.checked = true
+        if (draft.third.checked) {
+          draft.third.ons = action.data.ons
+          draft.third.cost = action.data.cost
+        }
+        return
+      case "thirdUnchecked":
+        draft.third.checked = false
+        if (!draft.third.checked) {
+          draft.third.ons = ""
+          draft.third.cost = 0
+        }
         return
     }
   }
@@ -40,9 +69,17 @@ export default function AddOns() {
   const [state, dispatch] = useImmerReducer(ourReducer, initialState)
 
   function handleSubmit() {
-    appDispatch({ type: "addOns", data: { first: { name: state.ons.first.name, cost: state.ons.first.cost }, second: { name: state.ons.second.name, cost: state.ons.second.cost }, third: { name: state.ons.third.name, cost: state.ons.third.cost } } })
+    appDispatch({ type: "addOns", data: [state.first, state.second, state.third] })
     navigate("/summary")
   }
+
+  useEffect(() => {
+    let data = [
+      { name: state.first.ons, cost: state.first.cost },
+      { name: state.second.ons, cost: state.second.cost },
+      { name: state.third.ons, cost: state.third.cost },
+    ]
+  }, [state])
 
   return (
     <Container>
@@ -52,10 +89,21 @@ export default function AddOns() {
           <h3 className={`text-2xl text-marineBlue font-bold`}>Pick add-ons</h3>
           <h5 className={`text-sm text-coolGray font-light`}>add-ons help enhance your gaming experience</h5>
         </div>
-        {/*  games +$1/mo */}
         <div className={`grid w-full gap-4`}>
           <div>
-            <input type="checkbox" value="Online Service" id="online-service" className="hidden peer" />
+            <input
+              type="checkbox"
+              onChange={(e) => {
+                if (e.target.checked) {
+                  dispatch({ type: "firstChecked", data: { ons: "Online Service", cost: appState.plan.yearly ? 10 : 1 } })
+                } else {
+                  dispatch({ type: "firstUnchecked", data: { ons: "", cost: 0 } })
+                }
+              }}
+              value="Online Service"
+              id="online-service"
+              className="hidden peer"
+            />
             <label htmlFor="online-service" className="inline-flex items-center justify-between w-full px-5 py-4 border border-lightGray rounded-lg cursor-pointer peer-checked:border-purplishBlue hover:bg-alabaster">
               <div className={`w-full flex justify-between items-center`}>
                 <div>
@@ -67,7 +115,19 @@ export default function AddOns() {
             </label>
           </div>
           <div>
-            <input type="checkbox" value="Larger Storage" id="Larger Storage" className="hidden peer" />
+            <input
+              type="checkbox"
+              onChange={(e) => {
+                if (e.target.checked) {
+                  dispatch({ type: "secondChecked", data: { ons: "Larger Storage", cost: appState.plan.yearly ? 20 : 2 } })
+                } else {
+                  dispatch({ type: "secondUnchecked", data: { ons: "", cost: 0 } })
+                }
+              }}
+              value="Larger Storage"
+              id="Larger Storage"
+              className="hidden peer"
+            />
             <label htmlFor="Larger Storage" className="inline-flex items-center justify-between w-full px-5 py-4 border border-lightGray rounded-lg cursor-pointer peer-checked:border-purplishBlue hover:bg-alabaster">
               <div className={`w-full flex justify-between items-center`}>
                 <div>
@@ -79,7 +139,19 @@ export default function AddOns() {
             </label>
           </div>
           <div>
-            <input type="checkbox" value="Customizable profile" id="Customizable profile" className="hidden peer" />
+            <input
+              type="checkbox"
+              onChange={(e) => {
+                if (e.target.checked) {
+                  dispatch({ type: "thirdChecked", data: { ons: "Customizable profile", cost: appState.plan.yearly ? 20 : 2 } })
+                } else {
+                  dispatch({ type: "thirdUnchecked", data: { ons: "", cost: 0 } })
+                }
+              }}
+              value="Customizable profile"
+              id="Customizable profile"
+              className="hidden peer"
+            />
             <label htmlFor="Customizable profile" className="inline-flex items-center justify-between w-full px-5 py-4 border border-lightGray rounded-lg cursor-pointer peer-checked:border-purplishBlue hover:bg-alabaster">
               <div className={`w-full flex justify-between items-center`}>
                 <div>

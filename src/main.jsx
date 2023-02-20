@@ -10,6 +10,7 @@ import AddOns from "./components/AddOns"
 import MainForm from "./components/MainForm"
 import SelectPlan from "./components/SelectPlan"
 import Summary from "./components/Summary"
+import Thanks from "./components/thanksPage"
 
 //Context
 import stateContext from "./stateContext"
@@ -24,9 +25,10 @@ export default function Main() {
     },
     plan: {
       type: "",
-      yearly: false,
+      yearly: undefined,
       price: 0,
     },
+    ons: [],
   }
 
   function ourReducer(draft, action) {
@@ -60,7 +62,15 @@ export default function Main() {
   }, [state.plan])
 
   //store ons
-  useEffect(() => {}, [state.ons])
+  // useEffect(() => {}, [state.ons])
+  useEffect(() => {
+    state.ons.map((item, i) => {
+      if (item.ons !== "") {
+        localStorage.setItem(`plan ${i}`, item.ons)
+        localStorage.setItem(`cost ${i}`, item.cost)
+      }
+    })
+  }, [state.ons])
 
   return (
     <stateContext.Provider value={state}>
@@ -71,6 +81,7 @@ export default function Main() {
             <Route path="/select-plan" element={<SelectPlan />} />
             <Route path="/add-ons" element={<AddOns />} />
             <Route path="/summary" element={<Summary />} />
+            <Route path="/thanks" element={<Thanks />} />
           </Routes>
         </BrowserRouter>
       </dispatchContext.Provider>
