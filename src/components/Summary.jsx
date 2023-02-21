@@ -8,13 +8,14 @@ export default function Summary() {
   const appState = useContext(stateContext)
   const navigate = useNavigate()
 
-  function handleSubmit() {}
-
   useEffect(() => {
     const totalCost = appState.ons.reduce((acc, obj) => acc + obj.cost, 0)
     console.log(totalCost)
   }, [])
 
+  function handleSubmit() {
+    navigate("/appreciation")
+  }
   return (
     <Container>
       <SideBar step={"4"} />
@@ -34,12 +35,12 @@ export default function Summary() {
               </div>
               <div className={`text-marineBlue text-sm font-medium`}>{"$" + appState.plan.price + (appState.plan.yearly ? "/yr" : "/mo")}</div>
             </div>
-            <hr className="h-px m-auto w-11/12 my-5 bg-lightGray" />
+            <hr className="h-px m-auto w-11/12 my-3 bg-lightGray" />
             <div>
               {appState.ons.map((item, i) => {
                 if (item.ons !== "") {
                   return (
-                    <div key={i} className={`flex justify-between p-2`}>
+                    <div key={i} className={`flex justify-between p-1`}>
                       <div className={`text-sm text-coolGray`}>{item.ons}</div>
                       <div className={`text-sm text-marineBlue`}>{"+$" + item.cost + (appState.plan.yearly ? "/yr" : "/mo")}</div>
                     </div>

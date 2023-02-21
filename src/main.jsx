@@ -85,7 +85,7 @@ export default function Main() {
             <Route path="/select-plan" element={<SelectPlan />} />
             <Route path="/add-ons" element={<AddOns />} />
             <Route path="/summary" element={<Summary />} />
-            <Route path="/thanks" element={<Thanks />} />
+            <Route path="/appreciation" element={<Thanks />} />
           </Routes>
         </BrowserRouter>
       </dispatchContext.Provider>
