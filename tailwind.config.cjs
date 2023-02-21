@@ -14,6 +14,12 @@ module.exports = {
         magnolia: "#f0f6ff",
         alabaster: "#fafbff",
       },
+      backgroundImage: {
+        sideimage: "url('/bg-sidebar-desktop.svg')",
+      },
+      fontFamily: {
+        heading: ["ubuntu"],
+      },
     },
   },
   plugins: [],

@@ -29,6 +29,7 @@ export default function Main() {
       price: 0,
     },
     ons: [],
+    totalCost: 0,
   }
 
   function ourReducer(draft, action) {
@@ -41,6 +42,9 @@ export default function Main() {
         return
       case "addOns":
         draft.ons = action.data
+        return
+      case "total":
+        draft.totalCost = draft.ons.reduce((acc, obj) => acc + obj.cost, 0) + draft.plan.price
         return
     }
   }

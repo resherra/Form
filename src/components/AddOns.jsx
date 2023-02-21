@@ -70,26 +70,19 @@ export default function AddOns() {
 
   function handleSubmit() {
     appDispatch({ type: "addOns", data: [state.first, state.second, state.third] })
+    appDispatch({ type: "total" })
     navigate("/summary")
   }
-
-  useEffect(() => {
-    let data = [
-      { name: state.first.ons, cost: state.first.cost },
-      { name: state.second.ons, cost: state.second.cost },
-      { name: state.third.ons, cost: state.third.cost },
-    ]
-  }, [state])
 
   return (
     <Container>
       <SideBar step={"3"} />
-      <div className={`w-[25rem] m-auto`}>
+      <div className={`w-[25rem] m-auto grid h-full py-10`}>
         <div>
           <h3 className={`text-2xl text-marineBlue font-bold`}>Pick add-ons</h3>
           <h5 className={`text-sm text-coolGray font-light`}>add-ons help enhance your gaming experience</h5>
         </div>
-        <div className={`grid w-full gap-4`}>
+        <div className={`self-center flex flex-col gap-3`}>
           <div>
             <input
               type="checkbox"
@@ -104,13 +97,13 @@ export default function AddOns() {
               id="online-service"
               className="hidden peer"
             />
-            <label htmlFor="online-service" className="inline-flex items-center justify-between w-full px-5 py-4 border border-lightGray rounded-lg cursor-pointer peer-checked:border-purplishBlue hover:bg-alabaster">
+            <label htmlFor="online-service" className="inline-flex items-center justify-between w-full px-6 py-3 border border-lightGray rounded-lg cursor-pointer peer-checked:border-purplishBlue peer-checked:bg-alabaster hover:bg-alabaster">
               <div className={`w-full flex justify-between items-center`}>
                 <div>
-                  <div className={`text-marineBlue font-semibold`}>Online Service</div>
+                  <div className={`text-marineBlue font-medium`}>Online Service</div>
                   <div className={`text-coolGray text-sm`}>Access to muliplayer games</div>
                 </div>
-                <div className={`text-sm text-purplishBlue font-semibold`}>{appState.plan.yearly ? "+$10/yr" : "+$1/mo"}</div>
+                <div className={`text-sm text-purplishBlue font-medium`}>{appState.plan.yearly ? "+$10/yr" : "+$1/mo"}</div>
               </div>
             </label>
           </div>
@@ -128,13 +121,13 @@ export default function AddOns() {
               id="Larger Storage"
               className="hidden peer"
             />
-            <label htmlFor="Larger Storage" className="inline-flex items-center justify-between w-full px-5 py-4 border border-lightGray rounded-lg cursor-pointer peer-checked:border-purplishBlue hover:bg-alabaster">
+            <label htmlFor="Larger Storage" className="inline-flex items-center justify-between w-full px-6 py-3 border border-lightGray rounded-lg cursor-pointer peer-checked:border-purplishBlue peer-checked:bg-alabaster hover:bg-alabaster">
               <div className={`w-full flex justify-between items-center`}>
                 <div>
-                  <div className={`text-marineBlue font-semibold`}>Larger Storage</div>
+                  <div className={`text-marineBlue font-medium`}>Larger Storage</div>
                   <div className={`text-coolGray text-sm`}>Extra 1TB of cloud save</div>
                 </div>
-                <div className={`text-sm text-purplishBlue font-semibold`}>{appState.plan.yearly ? "+$20/yr" : "+$2/mo"}</div>
+                <div className={`text-sm text-purplishBlue font-medium`}>{appState.plan.yearly ? "+$20/yr" : "+$2/mo"}</div>
               </div>
             </label>
           </div>
@@ -152,22 +145,22 @@ export default function AddOns() {
               id="Customizable profile"
               className="hidden peer"
             />
-            <label htmlFor="Customizable profile" className="inline-flex items-center justify-between w-full px-5 py-4 border border-lightGray rounded-lg cursor-pointer peer-checked:border-purplishBlue hover:bg-alabaster">
+            <label htmlFor="Customizable profile" className="inline-flex items-center justify-between w-full px-6 py-3 border border-lightGray rounded-lg cursor-pointer peer-checked:border-purplishBlue peer-checked:bg-alabaster hover:bg-alabaster">
               <div className={`w-full flex justify-between items-center`}>
                 <div>
-                  <div className={`text-marineBlue font-semibold`}>Customizable profile</div>
+                  <div className={`text-marineBlue font-medium`}>Customizable profile</div>
                   <div className={`text-coolGray text-sm`}>Custom theme on your profile</div>
                 </div>
-                <div className={`text-sm text-purplishBlue font-semibold`}>{appState.plan.yearly ? "+$20/yr" : "+$2/mo"}</div>
+                <div className={`text-sm text-purplishBlue font-medium`}>{appState.plan.yearly ? "+$20/yr" : "+$2/mo"}</div>
               </div>
             </label>
           </div>
         </div>
-        <div className={`mt-10 flex flex-row justify-between items-end`}>
+        <div className={`flex flex-row justify-between items-end`}>
           <Link to={"/select-plan"}>
-            <button className={`text-marineBlue text-sm font-semibold px-4 py-2`}>Go back</button>
+            <button className={`text-marineBlue text-sm font-medium px-4 py-2`}>Go back</button>
           </Link>
-          <button onClick={handleSubmit} className={`bg-marineBlue text-white text-sm font-semibold px-4 py-2 rounded-md`}>
+          <button onClick={handleSubmit} className={`bg-marineBlue text-white text-sm font-medium px-4 py-2 rounded-md`}>
             Next Step
           </button>
         </div>

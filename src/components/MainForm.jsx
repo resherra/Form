@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { useImmerReducer } from "use-immer"
 import Container from "../Container"
 import SideBar from "./SideBar"
@@ -139,45 +139,47 @@ export default function MainForm() {
   return (
     <Container>
       <SideBar step={"1"} />
-      <div className={`w-[25rem] m-auto`}>
+      <div className={`w-[25rem] m-auto grid h-full py-10`}>
         <div>
           <h3 className={`text-2xl text-marineBlue font-bold`}>Personal info</h3>
           <h5 className={`text-sm text-coolGray font-light`}>Please provide your name, email address, and phone number.</h5>
         </div>
-        <div>
-          <form className="flex flex-col">
-            <div className={`flex flex-col`}>
+        <div className={``}>
+          <form className="flex flex-col gap-5">
+            <div className={`flex flex-col gap-1`}>
               <div className={`flex justify-between`}>
-                <label htmlFor="Name" className={`font-semibold text-marineBlue text-xs pb-1`}>
+                <label htmlFor="Name" className={`font-medium text-marineBlue text-xs pb-1`}>
                   Name
                 </label>
-                <div className={`text-strawberryRed font-semibold text-xs`}>{state.name.hasErrors && state.name.message}</div>
+                <div className={`text-strawberryRed font-medium text-xs`}>{state.name.hasErrors && state.name.message}</div>
               </div>
-              <input autoComplete="off" autoCorrect="off" spellCheck="false" onChange={(e) => dispatch({ type: "nameNow", value: e.target.value })} placeholder="e.g. Stephen King" type="text" name="" className={`border border-lightGray rounded-md placeholder:text-xs placeholder:text-coolGray placeholder:font-semibold py-1 pl-2 mb-5 ` + (state.name.hasErrors ? "border-strawberryRed outline-strawberryRed" : "outline-purplishBlue")} />
+              <input autoComplete="off" autoCorrect="off" spellCheck="false" onChange={(e) => dispatch({ type: "nameNow", value: e.target.value })} placeholder="e.g. Stephen King" type="text" name="" className={`text-marineBlue text-sm border border-lightGray rounded-md placeholder:text-xs placeholder:text-coolGray placeholder:font-medium py-2 pl-4 ` + (state.name.hasErrors ? "border-strawberryRed outline-strawberryRed" : "outline-purplishBlue")} />
             </div>
-            <div className={`flex flex-col`}>
+            <div className={`flex flex-col gap-1`}>
               <div className={`flex justify-between`}>
-                <label htmlFor="Email address" className={`font-semibold text-marineBlue text-xs pb-1`}>
+                <label htmlFor="Email address" className={`font-medium text-marineBlue text-xs pb-1`}>
                   Email address
                 </label>
-                <div className={`text-strawberryRed font-semibold text-xs`}>{state.email.hasErrors && state.email.message}</div>
+                <div className={`text-strawberryRed font-medium text-xs`}>{state.email.hasErrors && state.email.message}</div>
               </div>
-              <input autoComplete="off" autoCorrect="off" spellCheck="false" onChange={(e) => dispatch({ type: "emailNow", value: e.target.value })} placeholder="e.g. stephenking@lorem.com" type="text" name="" className={`border border-lightGray rounded-md placeholder:text-xs placeholder:text-coolGray placeholder:font-semibold py-1 pl-2 mb-5 ` + (state.email.hasErrors ? "border-strawberryRed outline-strawberryRed" : "outline-purplishBlue")} />
+              <input autoComplete="off" autoCorrect="off" spellCheck="false" onChange={(e) => dispatch({ type: "emailNow", value: e.target.value })} placeholder="e.g. stephenking@lorem.com" type="text" name="" className={`text-marineBlue text-sm border border-lightGray rounded-md placeholder:text-xs placeholder:text-coolGray placeholder:font-medium py-2 pl-4 ` + (state.email.hasErrors ? "border-strawberryRed outline-strawberryRed" : "outline-purplishBlue")} />
             </div>
-            <div className={`flex flex-col`}>
+            <div className={`flex flex-col gap-1`}>
               <div className={`flex justify-between`}>
-                <label htmlFor="Phone Number" className={`font-semibold text-marineBlue text-xs pb-1 `}>
+                <label htmlFor="Phone Number" className={`font-medium text-marineBlue text-xs pb-1 `}>
                   Phone Number
                 </label>
-                <div className={`text-strawberryRed font-semibold text-xs`}>{state.phoneNumber.hasErrors && state.phoneNumber.message}</div>
+                <div className={`text-strawberryRed font-medium text-xs`}>{state.phoneNumber.hasErrors && state.phoneNumber.message}</div>
               </div>
-              <input autoComplete="off" autoCorrect="off" spellCheck="false" onChange={(e) => dispatch({ type: "phoneNumberNow", value: e.target.value })} placeholder="e.g. +1 234 567 890" type="text" className={`border border-lightGray rounded-md placeholder:text-xs placeholder:text-coolGray placeholder:font-semibold py-1 pl-2 mb-5 ` + (state.phoneNumber.hasErrors ? "border-strawberryRed outline-strawberryRed" : "outline-purplishBlue")} />
+              <input autoComplete="off" autoCorrect="off" spellCheck="false" onChange={(e) => dispatch({ type: "phoneNumberNow", value: e.target.value })} placeholder="e.g. +1 234 567 890" type="text" className={`text-marineBlue text-sm border border-lightGray rounded-md placeholder:text-xs placeholder:text-coolGray placeholder:font-medium py-2 pl-4 ` + (state.phoneNumber.hasErrors ? "border-strawberryRed outline-strawberryRed" : "outline-purplishBlue")} />
             </div>
           </form>
         </div>
-        <button onClick={handleSubmit} type="submit" className={`max-w-max bg-marineBlue text-white self-end text-sm font-semibold px-4 py-2 rounded-md`}>
-          Next Step
-        </button>
+        <div className={`flex flex-col self-end`}>
+          <button onClick={handleSubmit} type="submit" className={`max-w-max bg-marineBlue text-white self-end text-sm font-medium px-4 py-2 rounded-md`}>
+            Next Step
+          </button>
+        </div>
       </div>
     </Container>
   )
