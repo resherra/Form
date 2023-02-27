@@ -25,8 +25,8 @@ export default function Main() {
     },
     plan: {
       type: "",
-      yearly: undefined,
-      price: 0,
+      yearly: new Boolean(),
+      cost: 0,
     },
     ons: [],
     totalCost: 0,
@@ -44,7 +44,7 @@ export default function Main() {
         draft.ons = action.data
         return
       case "total":
-        draft.totalCost = draft.ons.reduce((acc, obj) => acc + obj.cost, 0) + draft.plan.price
+        draft.totalCost = draft.ons.reduce((acc, obj) => acc + obj.cost, 0) + draft.plan.cost
         return
     }
   }
@@ -62,7 +62,7 @@ export default function Main() {
   useEffect(() => {
     localStorage.setItem("type", state.plan.type)
     localStorage.setItem("yearly", state.plan.yearly)
-    localStorage.setItem("price", state.plan.price)
+    localStorage.setItem("price", state.plan.cost)
   }, [state.plan])
 
   //store ons

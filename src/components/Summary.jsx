@@ -33,7 +33,7 @@ export default function Summary() {
                   <Link to={`/select-plan`}>Change</Link>
                 </div>
               </div>
-              <div className={`text-marineBlue text-sm font-medium`}>{"$" + appState.plan.price + (appState.plan.yearly ? "/yr" : "/mo")}</div>
+              <div className={`text-marineBlue text-sm font-medium`}>{"$" + appState.plan.cost + (appState.plan.yearly ? "/yr" : "/mo")}</div>
             </div>
             <hr className="h-px m-auto w-11/12 my-3 bg-lightGray" />
             <div>
