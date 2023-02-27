@@ -55,20 +55,20 @@ export default function MainForm() {
       case "phoneNumberNow":
         draft.phoneNumber.hasErrors = false
         draft.phoneNumber.value = action.value
+        return
+      case "phoneNumberAfterDelay":
         if (!draft.phoneNumber.value) {
           draft.phoneNumber.hasErrors = true
           draft.phoneNumber.message = "This field is required"
-        }
-        if (draft.phoneNumber.value && (draft.phoneNumber.value.length < 10 || draft.phoneNumber.value.length > 15)) {
-          draft.phoneNumber.hasErrors = true
-          draft.phoneNumber.message = "Please enter a valid phone number"
         }
         if (draft.phoneNumber.value && !/^([0-9]+)$/.test(draft.phoneNumber.value)) {
           draft.phoneNumber.hasErrors = true
           draft.phoneNumber.message = "This field can only contain Numbers"
         }
-        return
-      case "phoneNumberAfterDelay":
+        if (draft.phoneNumber.value && (draft.phoneNumber.value.length < 10 || draft.phoneNumber.value.length > 15)) {
+          draft.phoneNumber.hasErrors = true
+          draft.phoneNumber.message = "Please enter a valid phone number"
+        }
         if (!draft.phoneNumber.hasErrors) {
           draft.phoneNumber.checkCount++
         }
@@ -109,11 +109,13 @@ export default function MainForm() {
 
   //check phone number after delay
   useEffect(() => {
-    const delay = setTimeout(() => {
-      dispatch({ type: "phoneNumberAfterDelay" })
-    }, 1200)
-    return () => {
-      clearTimeout(delay)
+    if (state.phoneNumber.value) {
+      const delay = setTimeout(() => {
+        dispatch({ type: "phoneNumberAfterDelay" })
+      }, 1200)
+      return () => {
+        clearTimeout(delay)
+      }
     }
   }, [state.phoneNumber.value])
 
