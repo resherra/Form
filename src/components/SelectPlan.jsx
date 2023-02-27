@@ -24,6 +24,7 @@ export default function SelectPlan() {
   function ourReducer(draft, action) {
     switch (action.type) {
       case "yearly":
+        //test
         draft.yearly = !draft.yearly
         if (draft.plan.cost <= 15) {
           draft.plan.cost = draft.plan.cost * 10
