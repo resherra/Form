@@ -2,7 +2,7 @@ import React from "react"
 
 export default function SideBar(props) {
   return (
-    <div className={`bg-sideimage m-2 flex flex-col gap-4 rounded-r-3xl rounded-l-lg pt-10 pl-6 pr-20`}>
+    <div className={`hidden bg-sideimage m-2 md:flex flex-col gap-4 rounded-r-3xl rounded-l-lg pt-10 pl-6 pr-20`}>
       <div className={`flex flex-row items-center gap-3`}>
         <div className={`w-6 h-6 rounded-full border border-blue-50 flex justify-center items-center ` + (props.step === "1" ? "bg-lightBlue text-marineBlue" : "text-white")}>
           <p className={`font-medium text-xs`}>1</p>

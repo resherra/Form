@@ -4,6 +4,7 @@ import { useImmerReducer } from "use-immer"
 import Container from "../Container"
 import SideBar from "./SideBar"
 import dispatchContext from "../dispatchContext"
+import ResSideBar from "./ResSideBar"
 
 export default function MainForm() {
   const appDispatch = useContext(dispatchContext)
@@ -141,44 +142,45 @@ export default function MainForm() {
   return (
     <Container>
       <SideBar step={"1"} />
-      <div className={`w-[25rem] m-auto grid h-full py-10`}>
+      <ResSideBar step={"1"} />
+      <div className={`max-w-full md:w-[25rem] m-auto grid gap-8 md:gap-0 h-full py-10`}>
         <div>
-          <h3 className={`text-2xl text-marineBlue font-bold`}>Personal info</h3>
-          <h5 className={`text-sm text-coolGray font-light`}>Please provide your name, email address, and phone number.</h5>
+          <h3 className={`text-lg md:text-2xl text-marineBlue font-bold`}>Personal info</h3>
+          <h5 className={`text-xs md:text-sm text-coolGray font-light`}>Please provide your name, email address, and phone number.</h5>
         </div>
         <div className={``}>
           <form className="flex flex-col gap-5">
             <div className={`flex flex-col gap-1`}>
-              <div className={`flex justify-between`}>
+              <div className={`flex flex-col md:justify-between`}>
                 <label htmlFor="Name" className={`font-medium text-marineBlue text-xs pb-1`}>
                   Name
                 </label>
-                <div className={`text-strawberryRed font-medium text-xs`}>{state.name.hasErrors && state.name.message}</div>
+                <div className={`text-strawberryRed font-medium text-[0.5rem] md:text-xs`}>{state.name.hasErrors && state.name.message}</div>
               </div>
-              <input autoComplete="off" autoCorrect="off" spellCheck="false" onChange={(e) => dispatch({ type: "nameNow", value: e.target.value })} placeholder="e.g. Stephen King" type="text" name="" className={`text-marineBlue text-sm border border-lightGray rounded-md placeholder:text-xs placeholder:text-coolGray placeholder:font-medium py-2 pl-4 ` + (state.name.hasErrors ? "border-strawberryRed outline-strawberryRed" : "outline-purplishBlue")} />
+              <input autoComplete="off" autoCorrect="off" spellCheck="false" onChange={(e) => dispatch({ type: "nameNow", value: e.target.value })} placeholder="e.g. Stephen King" type="text" name="" className={`text-marineBlue text-xs md:text-sm border border-lightGray rounded-[4px] md:rounded-md placeholder:text-xs placeholder:text-coolGray placeholder:font-medium py-1 md:py-2 pl-2 md:pl-4 ` + (state.name.hasErrors ? "border-strawberryRed outline-strawberryRed" : "outline-purplishBlue")} />
             </div>
             <div className={`flex flex-col gap-1`}>
-              <div className={`flex justify-between`}>
+              <div className={`flex flex-col md:justify-between`}>
                 <label htmlFor="Email address" className={`font-medium text-marineBlue text-xs pb-1`}>
                   Email address
                 </label>
-                <div className={`text-strawberryRed font-medium text-xs`}>{state.email.hasErrors && state.email.message}</div>
+                <div className={`text-strawberryRed font-medium text-[0.5rem] md:text-xs`}>{state.email.hasErrors && state.email.message}</div>
               </div>
-              <input autoComplete="off" autoCorrect="off" spellCheck="false" onChange={(e) => dispatch({ type: "emailNow", value: e.target.value })} placeholder="e.g. stephenking@lorem.com" type="text" name="" className={`text-marineBlue text-sm border border-lightGray rounded-md placeholder:text-xs placeholder:text-coolGray placeholder:font-medium py-2 pl-4 ` + (state.email.hasErrors ? "border-strawberryRed outline-strawberryRed" : "outline-purplishBlue")} />
+              <input autoComplete="off" autoCorrect="off" spellCheck="false" onChange={(e) => dispatch({ type: "emailNow", value: e.target.value })} placeholder="e.g. stephenking@lorem.com" type="text" name="" className={`text-marineBlue text-xs md:text-sm border border-lightGray rounded-[4px] md:rounded-md placeholder:text-xs placeholder:text-coolGray placeholder:font-medium py-1 md:py-2 pl-2 md:pl-4 ` + (state.email.hasErrors ? "border-strawberryRed outline-strawberryRed" : "outline-purplishBlue")} />
             </div>
             <div className={`flex flex-col gap-1`}>
-              <div className={`flex justify-between`}>
+              <div className={`flex flex-col md:justify-between`}>
                 <label htmlFor="Phone Number" className={`font-medium text-marineBlue text-xs pb-1 `}>
                   Phone Number
                 </label>
-                <div className={`text-strawberryRed font-medium text-xs`}>{state.phoneNumber.hasErrors && state.phoneNumber.message}</div>
+                <div className={`text-strawberryRed font-medium text-[0.5rem] md:text-xs`}>{state.phoneNumber.hasErrors && state.phoneNumber.message}</div>
               </div>
-              <input autoComplete="off" autoCorrect="off" spellCheck="false" onChange={(e) => dispatch({ type: "phoneNumberNow", value: e.target.value })} placeholder="e.g. +1 234 567 890" type="text" className={`text-marineBlue text-sm border border-lightGray rounded-md placeholder:text-xs placeholder:text-coolGray placeholder:font-medium py-2 pl-4 ` + (state.phoneNumber.hasErrors ? "border-strawberryRed outline-strawberryRed" : "outline-purplishBlue")} />
+              <input autoComplete="off" autoCorrect="off" spellCheck="false" onChange={(e) => dispatch({ type: "phoneNumberNow", value: e.target.value })} placeholder="e.g. +1 234 567 890" type="text" className={`text-marineBlue text-xs md:text-sm border border-lightGray rounded-[4px] md:rounded-md placeholder:text-xs placeholder:text-coolGray placeholder:font-medium py-1 md:py-2 pl-2 md:pl-4 ` + (state.phoneNumber.hasErrors ? "border-strawberryRed outline-strawberryRed" : "outline-purplishBlue")} />
             </div>
           </form>
         </div>
         <div className={`flex flex-col self-end`}>
-          <button onClick={handleSubmit} type="submit" className={`max-w-max bg-marineBlue text-white self-end text-sm font-medium px-4 py-2 rounded-md`}>
+          <button onClick={handleSubmit} type="submit" className={`max-w-max bg-marineBlue text-white self-end text-xs md:text-sm font-medium  px-3 md:px-4  py-[6px] md:py-2 rounded-md`}>
             Next Step
           </button>
         </div>

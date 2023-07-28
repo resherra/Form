@@ -7,6 +7,7 @@ import Container from "../Container"
 import dispatchContext from "../dispatchContext"
 import stateContext from "../stateContext"
 import SideBar from "./SideBar"
+import ResSideBar from "./ResSideBar"
 
 export default function AddOns() {
   const navigate = useNavigate()
@@ -77,10 +78,12 @@ export default function AddOns() {
   return (
     <Container>
       <SideBar step={"3"} />
-      <div className={`w-[25rem] m-auto grid h-full py-10`}>
+      <ResSideBar step={"3"} />
+
+      <div className={`max-w-full md:w-[25rem] m-auto grid gap-8 md:gap-0 h-full py-10`}>
         <div>
-          <h3 className={`text-2xl text-marineBlue font-bold`}>Pick add-ons</h3>
-          <h5 className={`text-sm text-coolGray font-light`}>add-ons help enhance your gaming experience</h5>
+          <h3 className={`text-lg md:text-2xl text-marineBlue font-bold`}>Pick add-ons</h3>
+          <h5 className={`text-xs md:text-sm text-coolGray font-light`}>add-ons help enhance your gaming experience</h5>
         </div>
         <div className={`self-center flex flex-col gap-3`}>
           <div>
@@ -97,13 +100,13 @@ export default function AddOns() {
               id="online-service"
               className="hidden peer"
             />
-            <label htmlFor="online-service" className="inline-flex items-center justify-between w-full px-6 py-3 border border-lightGray rounded-lg cursor-pointer peer-checked:border-purplishBlue peer-checked:bg-alabaster hover:bg-alabaster">
+            <label htmlFor="online-service" className="inline-flex items-center justify-between w-full px-3 md:px-6 py-2 md:py-3 border border-lightGray rounded-lg cursor-pointer peer-checked:border-purplishBlue peer-checked:bg-alabaster hover:bg-alabaster">
               <div className={`w-full flex justify-between items-center`}>
                 <div>
-                  <div className={`text-marineBlue font-medium`}>Online Service</div>
-                  <div className={`text-coolGray text-sm`}>Access to muliplayer games</div>
+                  <div className={`text-marineBlue text-xs md:text-sm font-medium pb-2`}>Online Service</div>
+                  <div className={`text-coolGray text-[0.6rem] md:text-sm`}>Access to muliplayer games</div>
                 </div>
-                <div className={`text-sm text-purplishBlue font-medium`}>{appState.plan.yearly ? "+$10/yr" : "+$1/mo"}</div>
+                <div className={`text-xs md:text-sm text-purplishBlue font-medium`}>{appState.plan.yearly ? "+$10/yr" : "+$1/mo"}</div>
               </div>
             </label>
           </div>
@@ -121,13 +124,13 @@ export default function AddOns() {
               id="Larger Storage"
               className="hidden peer"
             />
-            <label htmlFor="Larger Storage" className="inline-flex items-center justify-between w-full px-6 py-3 border border-lightGray rounded-lg cursor-pointer peer-checked:border-purplishBlue peer-checked:bg-alabaster hover:bg-alabaster">
+            <label htmlFor="Larger Storage" className="inline-flex items-center justify-between w-full px-3 md:px-6 py-2 md:py-3 border border-lightGray rounded-lg cursor-pointer peer-checked:border-purplishBlue peer-checked:bg-alabaster hover:bg-alabaster">
               <div className={`w-full flex justify-between items-center`}>
                 <div>
-                  <div className={`text-marineBlue font-medium`}>Larger Storage</div>
-                  <div className={`text-coolGray text-sm`}>Extra 1TB of cloud save</div>
+                  <div className={`text-marineBlue text-xs md:text-sm font-medium pb-2`}>Larger Storage</div>
+                  <div className={`text-coolGray text-[0.6rem]  md:text-sm`}>Extra 1TB of cloud save</div>
                 </div>
-                <div className={`text-sm text-purplishBlue font-medium`}>{appState.plan.yearly ? "+$20/yr" : "+$2/mo"}</div>
+                <div className={`text-xs md:text-sm text-purplishBlue font-medium`}>{appState.plan.yearly ? "+$20/yr" : "+$2/mo"}</div>
               </div>
             </label>
           </div>
@@ -145,22 +148,22 @@ export default function AddOns() {
               id="Customizable profile"
               className="hidden peer"
             />
-            <label htmlFor="Customizable profile" className="inline-flex items-center justify-between w-full px-6 py-3 border border-lightGray rounded-lg cursor-pointer peer-checked:border-purplishBlue peer-checked:bg-alabaster hover:bg-alabaster">
+            <label htmlFor="Customizable profile" className="inline-flex items-center justify-between w-full px-3 md:px-6 py-2 md:py-3 border border-lightGray rounded-lg cursor-pointer peer-checked:border-purplishBlue peer-checked:bg-alabaster hover:bg-alabaster">
               <div className={`w-full flex justify-between items-center`}>
                 <div>
-                  <div className={`text-marineBlue font-medium`}>Customizable profile</div>
-                  <div className={`text-coolGray text-sm`}>Custom theme on your profile</div>
+                  <div className={`text-marineBlue text-xs md:text-sm font-medium pb-2`}>Customizable profile</div>
+                  <div className={`text-coolGray text-[0.6rem] md:text-sm`}>Custom theme on your profile</div>
                 </div>
-                <div className={`text-sm text-purplishBlue font-medium`}>{appState.plan.yearly ? "+$20/yr" : "+$2/mo"}</div>
+                <div className={`text-xs md:text-sm text-purplishBlue font-medium`}>{appState.plan.yearly ? "+$20/yr" : "+$2/mo"}</div>
               </div>
             </label>
           </div>
         </div>
         <div className={`flex flex-row justify-between items-end`}>
           <Link to={"/select-plan"}>
-            <button className={`text-marineBlue text-sm font-medium px-4 py-2`}>Go back</button>
+            <button className={`text-marineBlue text-xs md:text-sm font-medium px-3 md:px-4  py-[6px] md:py-2`}>Go back</button>
           </Link>
-          <button onClick={handleSubmit} className={`bg-marineBlue text-white text-sm font-medium px-4 py-2 rounded-md`}>
+          <button onClick={handleSubmit} className={`max-w-max bg-marineBlue text-white self-end text-xs md:text-sm font-medium  px-3 md:px-4  py-[6px] md:py-2 rounded-md`}>
             Next Step
           </button>
         </div>
